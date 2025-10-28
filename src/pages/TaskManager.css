@@ -1,0 +1,215 @@
+
+/* 1. Contenedor principal de la página */
+.manager-container {
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 2rem;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+/* 2. El Formulario para añadir RUTAS (el azul) */
+.path-form {
+  display: flex;
+  gap: 1rem;
+  background-color: white;
+  padding: 1.5rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.path-form input {
+  flex-grow: 1;
+  padding: 0.75rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 1rem;
+}
+
+.path-form button {
+  background-color: #007bff;
+  color: white;
+  padding: 0 1.5rem;
+  border: none;
+  border-radius: 4px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  min-width: 120px;
+}
+
+.path-form button:hover {
+  background-color: #0056b3;
+}
+
+/* 3. La Lista de Hojas de Ruta */
+.paths-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.path-card {
+  background-color: white;
+  padding: 1.5rem 2rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  transition: box-shadow 0.2s;
+  display: flex; /* Para el footer */
+  flex-direction: column;
+}
+
+.path-card:hover {
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+}
+
+.path-card h2 {
+  color: #333;
+  margin-bottom: 1rem;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 1rem;
+}
+
+/* 4. Formulario para AÑADIR TAREAS (el verde) */
+.task-form {
+  display: flex;
+  gap: 0.75rem;
+  margin-top: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.task-form input {
+  flex-grow: 1;
+  padding: 0.75rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 1rem;
+}
+
+.task-form button {
+  background-color: #28a745;
+  color: white;
+  padding: 0 1.5rem;
+  border: none;
+  border-radius: 4px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  min-width: 100px;
+}
+
+.task-form button:hover {
+  background-color: #218838;
+}
+
+/* 5. Lista de Tareas (los checkboxes) */
+.task-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.task-item {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.8rem;
+  border-radius: 4px;
+  transition: background-color 0.2s;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.task-item:last-child {
+  border-bottom: none;
+}
+
+/* Hacemos que el item reaccione al hover,
+   pero no en el label o el input (que ya tienen cursor) */
+.task-item:hover {
+  background-color: #f8f9fa;
+}
+
+.task-item input[type="checkbox"] {
+  width: 1.15rem;
+  height: 1.15rem;
+  margin: 0;
+  cursor: pointer;
+}
+
+.task-item label {
+  flex-grow: 1; /* ¡Esto empuja el botón de borrar a la derecha! */
+  color: #444;
+  font-size: 1rem;
+  cursor: pointer;
+  margin: 0;
+}
+
+.task-item.completed label {
+  text-decoration: line-through;
+  color: #999;
+}
+
+/* 6. (¡NUEVO!) Botón de BORRAR TAREA (la 'X') */
+.task-delete-btn {
+  background-color: #fce8e6; /* Fondo rojo muy pálido */
+  color: #c93434; /* Rojo oscuro */
+  border: none;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%; /* Circular */
+  font-weight: 700;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: background-color 0.2s, color 0.2s;
+  /* Para centrar la 'X' */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+}
+
+.task-delete-btn:hover {
+  background-color: #dc3545; /* Rojo sólido */
+  color: white;
+}
+
+/* 7. (¡NUEVO!) Footer de la Tarjeta y Botón de BORRAR RUTA */
+.path-card-footer {
+  margin-top: 2rem; /* Espacio separador */
+  padding-top: 1rem;
+  border-top: 1px solid #f0f0f0;
+  display: flex;
+  justify-content: flex-end; /* Alinea el botón a la derecha */
+}
+
+.path-delete-btn {
+  background-color: transparent;
+  color: #dc3545; /* Rojo */
+  border: 1px solid #dc3545;
+  padding: 0.6rem 1rem;
+  border-radius: 4px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s, color 0.2s;
+}
+
+.path-delete-btn:hover {
+  background-color: #dc3545;
+  color: white;
+}
+
+/* 8. Mensaje de Rutas Vacías */
+.empty-paths {
+  text-align: center;
+  color: #777;
+  font-size: 1.1rem;
+  padding: 2rem;
+  background-color: #fafafa;
+  border-radius: 8px;
+}

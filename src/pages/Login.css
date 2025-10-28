@@ -1,0 +1,67 @@
+/* Estilos para mi página de Login */
+
+/* 1. El contenedor principal (la tarjeta del login) */
+.login-container {
+  /* Lo ubico en el centro de la pantalla */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh; /* Ocupa toda la altura de la pantalla */
+  background-color: #f4f4f4; /* El fondo gris */
+}
+
+/* 2. El formulario (la tarjeta blanca) */
+.login-form {
+  background-color: white;
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  width: 100%;
+  max-width: 400px; /* Ancho máximo del formulario */
+  display: flex;
+  flex-direction: column;
+  gap: 1rem; /* Espacio entre los elementos (h1, input, button) */
+}
+
+.login-form h1 {
+  text-align: center;
+  color: #333;
+  margin-bottom: 1rem;
+}
+
+/* 3. El grupo de input (label + input) */
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem; /* Espacio entre el label y el input */
+}
+
+.form-group label {
+  font-weight: 600;
+  color: #555;
+}
+
+.form-group input {
+  padding: 0.75rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 1rem;
+}
+
+/* 4. El botón */
+.login-button {
+  background-color: #007bff; /* Un color azul llamativo */
+  color: white;
+  padding: 0.75rem;
+  border: none;
+  border-radius: 4px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer; /* El cursor cambia a una manito */
+  transition: background-color 0.2s; /* Efecto suave */
+}
+
+.login-button:hover {
+  background-color: #0056b3; /* Un azul más oscuro al pasar el mouse */
+}

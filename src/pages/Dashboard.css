@@ -1,0 +1,109 @@
+/* Estilos para mi página de Dashboard */
+
+/* 1. Contenedor principal de la página */
+.dashboard-container {
+  width: 100%;
+  max-width: 900px; /* Mismo ancho que el manager */
+  margin: 0 auto; /* Centrado */
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.dashboard-container h1 {
+  color: #222;
+  border-bottom: 2px solid #eee;
+  padding-bottom: 1rem;
+}
+
+/* 2. Contenedor de Tarjetas de Estadísticas */
+.stats-grid {
+  display: grid;
+  /* Creo un grid responsivo */
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1.5rem;
+}
+
+.stat-card {
+  background-color: white;
+  padding: 1.5rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  border-left: 5px solid #007bff; /* Un detalle de color */
+}
+
+.stat-card h3 {
+  font-size: 1.1rem;
+  color: #555;
+  margin-bottom: 0.5rem;
+  text-transform: uppercase;
+}
+
+.stat-card .stat-number {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #007bff;
+}
+
+/* Diferentes colores para cada tarjeta */
+.stat-card.tasks {
+  border-left-color: #28a745; /* Verde */
+}
+.stat-card.tasks .stat-number {
+  color: #28a745;
+}
+
+.stat-card.completed {
+  border-left-color: #ffc107; /* Amarillo */
+}
+.stat-card.completed .stat-number {
+  color: #ffc107;
+}
+
+/* 3. Lista de Tareas Pendientes */
+.pending-tasks-container {
+  background-color: white;
+  padding: 1.5rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.pending-tasks-container h2 {
+  color: #333;
+  margin-bottom: 1.5rem;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 1rem;
+}
+
+.pending-task-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.pending-task-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem 0.5rem;
+  border-bottom: 1px solid #f4f4f4;
+}
+
+.pending-task-item:last-child {
+  border-bottom: none;
+}
+
+.pending-task-item .task-name {
+  font-weight: 600;
+  color: #444;
+}
+
+.pending-task-item .path-name {
+  /* La ruta a la que pertenece */
+  font-size: 0.9rem;
+  color: #fff;
+  background-color: #6c757d; /* Gris */
+  padding: 0.2rem 0.6rem;
+  border-radius: 12px;
+}
