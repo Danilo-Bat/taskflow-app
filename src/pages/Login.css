@@ -2,14 +2,12 @@
 /* 1. Contenedor General de Página    */
 /* ---------------------------------- */
 .login-container {
-  /* Ubicación central */
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: 100vh;
-  
-  /* Usamos variables para el fondo */
+  min-height: 100vh;
+  padding: 2rem 1rem;
   background-color: var(--color-bg-principal);
   transition: var(--transicion-rapida);
 }
@@ -18,21 +16,19 @@
 /* 2. Formulario (Tarjeta)            */
 /* ---------------------------------- */
 .login-form {
-  /* Usamos variables */
   background-color: var(--color-bg-tarjeta);
-  padding: 2.5rem; /* Un poco más de espacio */
+  padding: 2.5rem;
   border-radius: var(--border-radius-md);
   box-shadow: var(--shadow-md);
   
   width: 100%;
-  max-width: 400px;
+  max-width: 420px;
   display: flex;
   flex-direction: column;
-  gap: 1.25rem; /* Un poco más de espacio */
+  gap: 1.25rem;
   transition: var(--transicion-rapida);
 }
 
-/* Aplicamos el "glow" del modo oscuro */
 body.dark .login-form {
   border: 1px solid var(--color-borde-suave);
   box-shadow: 0 0 0 1px var(--color-borde-suave);
@@ -40,14 +36,34 @@ body.dark .login-form {
 
 .login-form h1 {
   text-align: center;
-  /* Usamos el color primario, como en el Navbar */
   color: var(--color-primario);
-  margin-bottom: 1rem;
+  margin-bottom: 0.5rem;
   font-weight: 700;
+  font-size: 1.75rem;
 }
 
 /* ---------------------------------- */
-/* 3. Grupo de Inputs                 */
+/* 3. Mensaje de Error                */
+/* ---------------------------------- */
+.error-message {
+  background-color: var(--color-fondo-rojo-suave);
+  color: var(--color-texto-rojo-fuerte);
+  padding: 0.75rem 1rem;
+  border-radius: var(--border-radius-sm);
+  font-size: 0.9rem;
+  text-align: center;
+  border: 1px solid var(--color-peligro);
+  animation: shake 0.3s ease;
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-10px); }
+  75% { transform: translateX(10px); }
+}
+
+/* ---------------------------------- */
+/* 4. Grupo de Inputs                 */
 /* ---------------------------------- */
 .form-group {
   display: flex;
@@ -58,10 +74,10 @@ body.dark .login-form {
 .form-group label {
   font-weight: 600;
   color: var(--color-texto-secundario);
+  font-size: 0.9rem;
 }
 
 .form-group input {
-  /* Estilos de input unificados */
   padding: 0.75rem;
   border: 1px solid var(--color-borde-fuerte);
   background-color: var(--color-bg-input);
@@ -72,31 +88,92 @@ body.dark .login-form {
   transition: var(--transicion-rapida);
 }
 
-/* Efecto de foco unificado */
 .form-group input:focus {
   outline: none;
   border-color: var(--color-primario);
   box-shadow: 0 0 0 3px var(--color-primario-focus-shadow);
 }
 
+.form-group input::placeholder {
+  color: var(--color-texto-desactivado);
+}
+
 /* ---------------------------------- */
-/* 4. Botón de Ingreso                */
+/* 5. Botón de Ingreso/Registro       */
 /* ---------------------------------- */
 .login-button {
-  /* Usamos el color primario */
   background-color: var(--color-primario);
   color: var(--color-texto-blanco);
-  
-  padding: 0.85rem; /* Un poco más grande */
+  padding: 0.85rem;
   border: none;
   border-radius: var(--border-radius-sm);
   font-size: 1rem;
   font-weight: 600;
   cursor: pointer;
   transition: var(--transicion-rapida);
-  margin-top: 0.5rem; /* Espacio extra arriba */
+  margin-top: 0.5rem;
 }
 
 .login-button:hover {
   background-color: var(--color-primario-hover);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-sm);
+}
+
+.login-button:active {
+  transform: translateY(0);
+}
+
+/* ---------------------------------- */
+/* 6. Toggle entre Login/Registro     */
+/* ---------------------------------- */
+.toggle-mode {
+  text-align: center;
+  margin-top: 0.5rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--color-borde-suave);
+}
+
+.toggle-mode p {
+  color: var(--color-texto-secundario);
+  font-size: 0.9rem;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.toggle-button {
+  background: none;
+  border: none;
+  color: var(--color-primario);
+  font-weight: 600;
+  font-size: 0.9rem;
+  cursor: pointer;
+  padding: 0;
+  text-decoration: underline;
+  transition: var(--transicion-rapida);
+}
+
+.toggle-button:hover {
+  color: var(--color-primario-hover);
+}
+
+/* ---------------------------------- */
+/* 7. Responsive                      */
+/* ---------------------------------- */
+@media (max-width: 480px) {
+  .login-form {
+    padding: 2rem 1.5rem;
+  }
+
+  .login-form h1 {
+    font-size: 1.5rem;
+  }
+
+  .form-group input,
+  .login-button {
+    font-size: 0.95rem;
+  }
 }

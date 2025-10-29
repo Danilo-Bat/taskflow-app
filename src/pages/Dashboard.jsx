@@ -1,14 +1,7 @@
-// 1. Importo las herramientas
-// Importamos useState y useEffect
-import React, { useContext, useMemo, useState, useEffect } from 'react'; 
-
-// 2. Importo el contexto de datos
+import React, { useContext, useMemo, useState, useEffect } from 'react';
 import { PathsContext } from '../context/PathsContext';
-
-// 3. Importo los estilos
 import './Dashboard.css';
 
-// Estado inicial para la animación
 const initialStats = {
   totalPaths: 0,
   totalTasks: 0,
@@ -22,6 +15,8 @@ const initialStats = {
 export default function Dashboard() {
   
   const { paths } = useContext(PathsContext);
+
+  // Calculamos las estadísticas basadas en las rutas
   const contextStats = useMemo(() => {
     const totalPaths = paths.length;
     let totalTasks = 0;
@@ -53,23 +48,20 @@ export default function Dashboard() {
       mediumPriorityPending,
       lowPriorityPending,
     };
-  }, [paths]); 
+  }, [paths]);
 
-  // 5. Estado local para manejar la animación
+  // Estado local para las animaciones de los números
   const [animatedStats, setAnimatedStats] = useState(initialStats);
   
   useEffect(() => {
-    // Cuando el componente carga o los stats del contexto cambian,
-    // actualizamos el estado local. Esto dispara la transición CSS.
-    // Usamos un pequeño timeout para asegurar que el DOM se pinte con 0s primero.
     const timer = setTimeout(() => {
       setAnimatedStats(contextStats);
-    }, 50); // 50ms es suficiente
+    }, 50);
     
-    return () => clearTimeout(timer); // Limpiamos el timer
-  }, [contextStats]); // Depende de los stats reales
+    return () => clearTimeout(timer);
+  }, [contextStats]);
 
-  // 6. OBTENGO LA LISTA DE TAREAS PENDIENTES
+  // Obtenemos la lista de tareas pendientes
   const pendingTasks = useMemo(() => {
     return paths.flatMap(path => 
       path.tasks
@@ -78,13 +70,10 @@ export default function Dashboard() {
     );
   }, [paths]);
 
-
-  // 7. Devuelvo el JSX usando 'animatedStats'
   return (
     <div className="dashboard-container">
       <h1>Mi Dashboard (Centro de Progreso)</h1>
 
-      {/* --- SECCIÓN DE ESTADÍSTICAS --- */}
       <section className="stats-grid">
         <div className="stat-card">
           <h3>Rutas Creadas</h3>
@@ -108,7 +97,6 @@ export default function Dashboard() {
           ></p>
         </div>
         
-        {/* --- Desglose de Prioridad --- */}
         <div className="stat-card priority-breakdown">
           <h3>Pendientes por Prioridad</h3>
           <div className="priority-item high">
@@ -126,7 +114,6 @@ export default function Dashboard() {
         </div>
       </section>
 
-      {/* --- SECCIÓN DE TAREAS PENDIENTES --- */}
       <section className="pending-tasks-container">
         <h2>Próximas Tareas Pendientes</h2>
         

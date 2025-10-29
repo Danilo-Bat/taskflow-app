@@ -13,7 +13,7 @@
 }
 
 /* ---------------------------------- */
-/* 2. Formulario de Ruta     */
+/* 2. Formulario de Ruta              */
 /* ---------------------------------- */
 .path-form {
   display: flex;
@@ -94,12 +94,12 @@ body.dark .path-card {
   transform: translateY(-2px);
   box-shadow: var(--shadow-lg);
 }
+
 body.dark .path-card:hover {
   transform: translateY(-2px);
   border-color: var(--color-borde-fuerte);
   box-shadow: 0 0 0 1px var(--color-borde-fuerte);
 }
-
 
 .path-card h2 {
   color: var(--color-texto-principal);
@@ -142,6 +142,12 @@ body.dark .path-card:hover {
   justify-content: center;
 }
 
+.path-edit-btn:focus-visible,
+.path-delete-btn:focus-visible {
+  outline: 2px solid var(--color-primario);
+  outline-offset: 2px;
+}
+
 .path-edit-btn:hover {
   background-color: var(--color-fondo-gris-suave);
   color: var(--color-primario);
@@ -150,6 +156,7 @@ body.dark .path-card:hover {
 .path-delete-btn {
   font-size: 0.9rem; 
 }
+
 .path-delete-btn:hover {
   background-color: var(--color-fondo-rojo-suave);
   color: var(--color-peligro);
@@ -194,6 +201,7 @@ body.dark .path-card:hover {
   background-color: var(--color-secundario);
   color: var(--color-texto-blanco);
 }
+
 .path-edit-save-btn:hover {
   background-color: var(--color-secundario-hover);
 }
@@ -203,6 +211,7 @@ body.dark .path-card:hover {
   color: var(--color-texto-principal);
   border: 1px solid var(--color-borde-fuerte);
 }
+
 .path-edit-cancel-btn:hover {
   background-color: var(--color-borde-fuerte);
 }
@@ -256,12 +265,12 @@ body.dark .path-card:hover {
   font-family: var(--font-principal);
   transition: var(--transicion-rapida);
 }
+
 .task-form input:focus {
   outline: none;
   border-color: var(--color-primario);
   box-shadow: 0 0 0 3px var(--color-primario-focus-shadow);
 }
-
 
 .task-priority-select {
   padding: 0.75rem;
@@ -313,6 +322,9 @@ body.dark .task-priority-select {
   flex-direction: column;
   gap: 0.25rem;
   min-height: 50px;
+  /* Contexto para el stacking del DnD */
+  position: relative;
+  z-index: 1;
 }
 
 .task-list-empty-msg {
@@ -330,8 +342,9 @@ body.dark .task-priority-select {
   border-radius: var(--border-radius-sm);
   border-bottom: 1px solid var(--color-borde-suave); 
   transition: var(--transicion-rapida), opacity 0.2s ease;
-  
-  overflow: hidden; 
+  overflow: hidden;
+  /* Cursor para indicar que es arrastrable */
+  cursor: grab;
 }
 
 .task-item:last-child {
@@ -342,9 +355,30 @@ body.dark .task-priority-select {
   background-color: var(--color-fondo-gris-suave);
 }
 
+/* Estilos durante el drag */
+.task-item.dragging {
+  box-shadow: 
+    0 20px 60px rgba(0, 0, 0, 0.3),
+    0 0 0 1px rgba(255, 255, 255, 0.1);
+  cursor: grabbing !important;
+  background-color: var(--color-bg-tarjeta);
+  border-radius: var(--border-radius-sm);
+  /* Sutil rotación durante drag */
+  transform: rotate(2deg);
+  /* Mantener opacidad para el clone */
+  opacity: 0.95 !important;
+}
+
+body.dark .task-item.dragging {
+  box-shadow: 
+    0 20px 60px rgba(0, 0, 0, 0.5),
+    0 0 0 1px rgba(255, 255, 255, 0.15);
+}
+
 .task-item.completed {
   opacity: 0.7; 
 }
+
 .task-item.completed:hover {
   opacity: 1; 
 }
@@ -393,10 +427,12 @@ body.dark .task-priority-select {
   background-color: var(--color-fondo-rojo-suave);
   color: var(--color-texto-rojo-fuerte);
 }
+
 .priority-tag.medium {
   background-color: var(--color-fondo-aviso-suave);
-  color: var(--color-texto-aviso-fuerte);
+  color: var(--color-texto-avo-fuerte);
 }
+
 .priority-tag.low {
   background-color: var(--color-fondo-info-suave);
   color: var(--color-texto-info-fuerte);
@@ -437,13 +473,36 @@ body.dark .task-priority-select {
 }
 
 body.dark .filter-btn.active {
-   background-color: var(--color-borde-suave);
+  background-color: var(--color-borde-suave);
+}
+
+/* ---------------------------------- */
+/* 5c. Placeholder de DnD    */
+/* ---------------------------------- */
+[data-rbd-placeholder-context-id] {
+  background: linear-gradient(
+    135deg,
+    rgba(99, 102, 241, 0.1),
+    rgba(99, 102, 241, 0.05)
+  ) !important;
+  border: 2px dashed rgba(99, 102, 241, 0.4) !important;
+  border-radius: var(--border-radius-sm) !important;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  margin: 0.25rem 0 !important;
+}
+
+body.dark [data-rbd-placeholder-context-id] {
+  background: linear-gradient(
+    135deg,
+    rgba(129, 140, 248, 0.15),
+    rgba(129, 140, 248, 0.08)
+  ) !important;
+  border-color: rgba(129, 140, 248, 0.5) !important;
 }
 
 /* ---------------------------------- */
 /* 6. Botones de Acción de Tarea      */
 /* ---------------------------------- */
-
 .task-item-controls {
   display: flex;
   align-items: center;
@@ -454,7 +513,8 @@ body.dark .filter-btn.active {
   transition: var(--transicion-rapida);
 }
 
-.task-item:hover .task-item-controls {
+.task-item:hover .task-item-controls,
+.task-item:focus-within .task-item-controls {
   opacity: 1;
 }
 
@@ -471,6 +531,11 @@ body.dark .filter-btn.active {
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.task-control-btn:focus-visible {
+  outline: 2px solid var(--color-primario);
+  outline-offset: 2px;
 }
 
 .task-control-btn.edit-btn:hover {
@@ -495,6 +560,7 @@ body.dark .filter-btn.active {
   border-radius: var(--border-radius-md);
   border: 1px dashed var(--color-borde-fuerte);
 }
+
 body.dark .empty-paths {
   border-color: var(--color-borde-suave);
 }
@@ -559,6 +625,7 @@ body.dark .task-priority-select-edit {
   background-color: var(--color-secundario);
   color: var(--color-texto-blanco);
 }
+
 .task-edit-save-btn:hover {
   background-color: var(--color-secundario-hover);
 }
@@ -568,6 +635,7 @@ body.dark .task-priority-select-edit {
   color: var(--color-texto-principal);
   border: 1px solid var(--color-borde-fuerte);
 }
+
 .task-edit-cancel-btn:hover {
   background-color: var(--color-borde-fuerte);
 }
