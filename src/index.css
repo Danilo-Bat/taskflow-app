@@ -1,29 +1,120 @@
+/* 1. Importación de Fuente */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
 
-/* 1. Reseteo de CSS */
-/* Esto asegura que todos los navegadores empiecen
-   desde el mismo punto */
+/* 2. Definición de Variables CSS (Tema Claro por defecto) */
+:root {
+  /* --- Paleta de Colores --- */
+  
+  /* Paleta de Acentos */
+  --color-primario: #4f46e5; /* Índigo */
+  --color-primario-hover: #4338ca;
+  
+  --color-secundario: #10b981; /* Esmeralda */
+  --color-secundario-hover: #059669;
+
+  --color-peligro: #ef4444; /* Rojo */
+  --color-peligro-hover: #dc2626;
+
+  --color-aviso: #f59e0b; /* Ámbar */
+  --color-aviso-hover: #d97706;
+
+  --color-info: #3b82f6; /* Azul (para etiquetas 'Baja') */
+
+  /* Paleta de Fondos */
+  --color-bg-principal: #f8f9fa; /* Un blanco roto muy sutil */
+  --color-bg-tarjeta: #ffffff;
+  --color-bg-input: #fdfdfd; /* Fondo de inputs, ligeramente diferente */
+  --color-fondo-gris-suave: #f1f3f5; /* Para hovers sutiles */
+  
+  /* Paleta de Textos */
+  --color-texto-principal: #18181b; /* Un negro más suave (Zinc 900) */
+  --color-texto-secundario: #52525b; /* (Zinc 600) */
+  --color-texto-desactivado: #a1a1aa; /* (Zinc 400) */
+  --color-texto-blanco: #ffffff;
+
+  /* Paleta de Bordes */
+  --color-borde-suave: #e5e7eb; /* (Gris 200) */
+  --color-borde-fuerte: #d4d4d8; /* (Zinc 300) */
+
+  /* --- Etiquetas de Prioridad Suaves --- */
+  --color-fondo-rojo-suave: #fee2e2;
+  --color-texto-rojo-fuerte: #b91c1c;
+  --color-fondo-aviso-suave: #fffbeb;
+  --color-texto-aviso-fuerte: #b45309;
+  --color-fondo-info-suave: #dbeafe;
+  --color-texto-info-fuerte: #1d4ed8;
+
+  /* --- Sombras y Layout --- */
+  --font-principal: 'Inter', system-ui, -apple-system, sans-serif;
+  
+  /* Sombras suaves en capas */
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.03);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.07), 0 4px 6px -4px rgba(0, 0, 0, 0.07);
+
+  /*Variable de Sombra de Foco */
+  --color-primario-focus-shadow: rgba(79, 70, 229, 0.2);
+
+  /* Radios de Borde Consistentes */
+  --border-radius-sm: 4px;
+  --border-radius-md: 8px;
+  
+  /* Transición */
+  --transicion-rapida: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* 3. Definición del Tema Oscuro */
+body.dark {
+  /* --- Paleta Oscura --- */
+  
+  /* Paleta de Fondos */
+  --color-bg-principal: #18181b; /* (Zinc 900) */
+  --color-bg-tarjeta: #27272a; /* (Zinc 800) */
+  --color-bg-input: #1f1f22;
+  --color-fondo-gris-suave: #3f3f46; /* (Zinc 700) */
+
+  /* Paleta de Textos */
+  --color-texto-principal: #f4f4f5; /* (Zinc 100) */
+  --color-texto-secundario: #a1a1aa; /* (Zinc 400) */
+  --color-texto-desactivado: #71717a; /* (Zinc 500) */
+
+  /* Paleta de Bordes */
+  --color-borde-suave: #3f3f46; /* (Zinc 700) */
+  --color-borde-fuerte: #52525b; /* (Zinc 600) */
+
+  /* --- Etiquetas de Prioridad Suaves (Modo Oscuro) --- */
+  --color-fondo-rojo-suave: #450a0a;
+  --color-texto-rojo-fuerte: #fca5a5;
+  --color-fondo-aviso-suave: #422006;
+  --color-texto-aviso-fuerte: #fde68a;
+  --color-fondo-info-suave: #1e3a8a;
+  --color-texto-info-fuerte: #bfdbfe;
+
+  /* --- Sombra en Modo Oscuro --- */
+  --shadow-sm: none;
+  --shadow-md: none;
+  --shadow-lg: none;
+
+  /*Sombra de Foco en Modo Oscuro */
+  --color-primario-focus-shadow: rgba(79, 70, 229, 0.3);
+}
+
+/* 4. Reseteo y Estilos Base */
 * {
   margin: 0;
   padding: 0;
-  box-sizing: border-box; /* Un estándar para el layout */
+  box-sizing: border-box;
 }
 
-/* 2. Estilos base para el <body> */
 body {
-  /* Usamos una pila de fuentes moderna y de sistema */
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 
-               Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-  
-  background-color: #f4f7f6;
-  
-  /* Un color de texto base oscuro para mejor legibilidad */
-  color: #333; 
-  
-  line-height: 1.5; /* Un espaciado de línea más cómodo */
+  font-family: var(--font-principal);
+  background-color: var(--color-bg-principal);
+  color: var(--color-texto-principal);
+  line-height: 1.5;
+  transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
 }
 
-/* 3. Reseteo de estilos de links */
 a {
-  color: inherit; /* Hereda el color */
-  text-decoration: none; /* Quita el subrayado por defecto */
+  color: inherit;
+  text-decoration: none;
 }

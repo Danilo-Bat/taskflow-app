@@ -1,16 +1,26 @@
 // 1. Importo React, el hook para el contexto y NavLink
 import React, { useContext } from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom'; // Importamos useNavigate
 
-// 2. Importo el AuthContext para usar la función 'logout'
+// 2. Importo el AuthContext para usar la función 'logout' Y el 'user'
 import { AuthContext } from '../context/AuthContext';
 
-// 3. Importo los estilos que crearemos ahora
+// 3. Importo el ThemeToggle
+import ThemeToggle from "./ThemeToggle/ThemeToggle.jsx"; // Ajusta la ruta si es necesario
+
+// 4. Importo los estilos que crearemos ahora
 import './Navbar.css';
 
 export const Navbar = () => {
-  // 4. Saco la función 'logout' del contexto
-  const { logout } = useContext(AuthContext);
+  // 5. Saco 'logout' y 'user' del contexto
+  const { logout, user } = useContext(AuthContext);
+  const navigate = useNavigate(); // Hook para redirigir
+
+  // 6. Función de logout completa
+  const handleLogout = () => {
+    logout();
+    navigate('/login'); // Redirige al login tras cerrar sesión
+  };
 
   return (
     <nav className="navbar">
@@ -20,10 +30,6 @@ export const Navbar = () => {
 
         {/* Links de navegación */}
         <div className="navbar-links">
-          {/* Uso 'NavLink' en lugar de 'a' o 'Link'.
-            'NavLink' es inteligente: añade la clase 'active'
-            automáticamente al link de la página en la que estoy.
-          */}
           <NavLink 
             to="/manager" 
             className={({ isActive }) => isActive ? 'nav-link active' : 'nav-link'}
@@ -38,10 +44,22 @@ export const Navbar = () => {
           </NavLink>
         </div>
 
-        {/* Botón de Logout */}
-        <button onClick={logout} className="logout-button-nav">
-          Cerrar Sesión
-        </button>
+        {/* Controles de la derecha */}
+        <div className="navbar-controls">
+          {/* Mostramos el email del usuario */}
+          <span className="navbar-user-email">
+            {user ? user.email : ''}
+          </span>
+          
+          {/* Botón de Tema */}
+          <ThemeToggle />
+
+          {/* Botón de Logout */}
+          <button onClick={handleLogout} className="logout-button-nav">
+            Cerrar Sesión
+          </button>
+        </div>
+
       </div>
     </nav>
   );

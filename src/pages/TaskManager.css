@@ -1,5 +1,6 @@
-
-/* 1. Contenedor principal de la página */
+/* ---------------------------------- */
+/* 1. Layout General                  */
+/* ---------------------------------- */
 .manager-container {
   width: 100%;
   max-width: 900px;
@@ -11,42 +12,62 @@
   gap: 2rem;
 }
 
-/* 2. El Formulario para añadir RUTAS (el azul) */
+/* ---------------------------------- */
+/* 2. Formulario de Ruta     */
+/* ---------------------------------- */
 .path-form {
   display: flex;
   gap: 1rem;
-  background-color: white;
+  background-color: var(--color-bg-tarjeta);
   padding: 1.5rem;
-  border-radius: 8px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  border-radius: var(--border-radius-md);
+  box-shadow: var(--shadow-md);
+  transition: var(--transicion-rapida);
+}
+
+body.dark .path-form {
+  border: 1px solid var(--color-borde-suave);
+  box-shadow: 0 0 0 1px var(--color-borde-suave);
 }
 
 .path-form input {
   flex-grow: 1;
   padding: 0.75rem;
-  border: 1px solid #ccc;
-  border-radius: 4px;
+  border: 1px solid var(--color-borde-fuerte);
+  background-color: var(--color-bg-input); 
+  color: var(--color-texto-principal);
+  border-radius: var(--border-radius-sm);
   font-size: 1rem;
+  font-family: var(--font-principal);
+  transition: var(--transicion-rapida);
+}
+
+.path-form input:focus {
+  outline: none;
+  border-color: var(--color-primario);
+  box-shadow: 0 0 0 3px var(--color-primario-focus-shadow);
 }
 
 .path-form button {
-  background-color: #007bff;
-  color: white;
+  background-color: var(--color-primario);
+  color: var(--color-texto-blanco);
   padding: 0 1.5rem;
   border: none;
-  border-radius: 4px;
+  border-radius: var(--border-radius-sm);
   font-size: 1rem;
   font-weight: 600;
   cursor: pointer;
-  transition: background-color 0.2s;
+  transition: var(--transicion-rapida);
   min-width: 120px;
 }
 
 .path-form button:hover {
-  background-color: #0056b3;
+  background-color: var(--color-primario-hover);
 }
 
-/* 3. La Lista de Hojas de Ruta */
+/* ---------------------------------- */
+/* 3. Listas y Tarjetas               */
+/* ---------------------------------- */
 .paths-list {
   display: flex;
   flex-direction: column;
@@ -54,162 +75,499 @@
 }
 
 .path-card {
-  background-color: white;
+  background-color: var(--color-bg-tarjeta);
   padding: 1.5rem 2rem;
-  border-radius: 8px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-  transition: box-shadow 0.2s;
-  display: flex; /* Para el footer */
+  border-radius: var(--border-radius-md);
+  box-shadow: var(--shadow-md);
+  display: flex;
   flex-direction: column;
+  transition: var(--transicion-rapida);
+  overflow: hidden; 
+}
+
+body.dark .path-card {
+  border: 1px solid var(--color-borde-suave);
+  box-shadow: 0 0 0 1px var(--color-borde-suave);
 }
 
 .path-card:hover {
-  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
+}
+body.dark .path-card:hover {
+  transform: translateY(-2px);
+  border-color: var(--color-borde-fuerte);
+  box-shadow: 0 0 0 1px var(--color-borde-fuerte);
 }
 
+
 .path-card h2 {
-  color: #333;
+  color: var(--color-texto-principal);
+  font-size: 1.35rem; 
+  font-weight: 600;
+  margin: 0;
+}
+
+.path-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   margin-bottom: 1rem;
-  border-bottom: 1px solid #eee;
+  border-bottom: 1px solid var(--color-borde-suave);
   padding-bottom: 1rem;
 }
 
-/* 4. Formulario para AÑADIR TAREAS (el verde) */
+.path-header-controls {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-shrink: 0;
+  margin-left: 1rem;
+}
+
+.path-edit-btn,
+.path-delete-btn {
+  background-color: transparent;
+  color: var(--color-texto-secundario);
+  border: none;
+  padding: 0;
+  border-radius: 50%;
+  font-size: 0.95rem; 
+  cursor: pointer;
+  transition: var(--transicion-rapida);
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.path-edit-btn:hover {
+  background-color: var(--color-fondo-gris-suave);
+  color: var(--color-primario);
+}
+
+.path-delete-btn {
+  font-size: 0.9rem; 
+}
+.path-delete-btn:hover {
+  background-color: var(--color-fondo-rojo-suave);
+  color: var(--color-peligro);
+}
+
+/* ---------------------------------- */
+/* 3b. Formulario Edición Ruta        */
+/* ---------------------------------- */
+.path-edit-form {
+  display: flex;
+  gap: 0.75rem;
+  align-items: center;
+  margin-bottom: 1rem;
+  padding-bottom: 1rem; 
+}
+
+.path-edit-form input {
+  flex-grow: 1;
+  padding: 0.75rem;
+  border: 1px solid var(--color-primario);
+  background-color: var(--color-bg-input);
+  color: var(--color-texto-principal);
+  border-radius: var(--border-radius-sm);
+  font-size: 1.25rem;
+  font-weight: 600;
+  font-family: var(--font-principal);
+}
+
+.path-edit-save-btn,
+.path-edit-cancel-btn {
+  padding: 0.75rem 1rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  border: none;
+  border-radius: var(--border-radius-sm);
+  cursor: pointer;
+  transition: var(--transicion-rapida);
+  flex-shrink: 0;
+}
+
+.path-edit-save-btn {
+  background-color: var(--color-secundario);
+  color: var(--color-texto-blanco);
+}
+.path-edit-save-btn:hover {
+  background-color: var(--color-secundario-hover);
+}
+
+.path-edit-cancel-btn {
+  background-color: var(--color-fondo-gris-suave);
+  color: var(--color-texto-principal);
+  border: 1px solid var(--color-borde-fuerte);
+}
+.path-edit-cancel-btn:hover {
+  background-color: var(--color-borde-fuerte);
+}
+
+/* ---------------------------------- */
+/* 3c. Barra de Progreso Ruta         */
+/* ---------------------------------- */
+.path-progress-section {
+  margin-bottom: 1.5rem; 
+}
+
+.path-progress-text {
+  font-size: 0.85rem;
+  color: var(--color-texto-secundario);
+  margin-bottom: 0.5rem;
+  display: block;
+}
+
+.path-progress-bar {
+  width: 100%;
+  height: 8px; 
+  background-color: var(--color-fondo-gris-suave);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.path-progress-fill {
+  height: 100%;
+  background-color: var(--color-primario);
+  border-radius: 4px;
+  transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1); 
+}
+
+/* ---------------------------------- */
+/* 4. Formulario de Tarea             */
+/* ---------------------------------- */
 .task-form {
   display: flex;
   gap: 0.75rem;
-  margin-top: 1.5rem;
   margin-bottom: 1.5rem;
 }
 
 .task-form input {
   flex-grow: 1;
   padding: 0.75rem;
-  border: 1px solid #ddd;
-  border-radius: 4px;
+  border: 1px solid var(--color-borde-fuerte);
+  background-color: var(--color-bg-input);
+  color: var(--color-texto-principal);
+  border-radius: var(--border-radius-sm);
   font-size: 1rem;
+  font-family: var(--font-principal);
+  transition: var(--transicion-rapida);
+}
+.task-form input:focus {
+  outline: none;
+  border-color: var(--color-primario);
+  box-shadow: 0 0 0 3px var(--color-primario-focus-shadow);
+}
+
+
+.task-priority-select {
+  padding: 0.75rem;
+  border: 1px solid var(--color-borde-fuerte);
+  background-color: var(--color-bg-input);
+  color: var(--color-texto-principal);
+  border-radius: var(--border-radius-sm);
+  font-size: 1rem;
+  flex-shrink: 0;
+  font-family: var(--font-principal);
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3E%3Cpath stroke='%23a1a1aa' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='m6 8 4 4 4-4'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 0.75rem center;
+  background-size: 1.25em;
+  padding-right: 2.5rem; 
+}
+
+body.dark .task-priority-select {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3E%3Cpath stroke='%2371717a' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='m6 8 4 4 4-4'/%3E%3C/svg%3E");
 }
 
 .task-form button {
-  background-color: #28a745;
-  color: white;
+  background-color: var(--color-fondo-gris-suave);
+  color: var(--color-texto-principal);
+  border: 1px solid var(--color-borde-fuerte);
   padding: 0 1.5rem;
-  border: none;
-  border-radius: 4px;
+  border-radius: var(--border-radius-sm);
   font-size: 1rem;
   font-weight: 600;
   cursor: pointer;
-  transition: background-color 0.2s;
+  transition: var(--transicion-rapida);
   min-width: 100px;
 }
 
 .task-form button:hover {
-  background-color: #218838;
+  background-color: var(--color-secundario);
+  border-color: var(--color-secundario);
+  color: var(--color-texto-blanco);
 }
 
-/* 5. Lista de Tareas (los checkboxes) */
+/* ---------------------------------- */
+/* 5. Lista de Tareas                 */
+/* ---------------------------------- */
 .task-list {
   display: flex;
   flex-direction: column;
   gap: 0.25rem;
+  min-height: 50px;
+}
+
+.task-list-empty-msg {
+  color: var(--color-texto-secundario);
+  padding: 1rem 0;
+  text-align: center;
+  font-size: 0.95rem;
 }
 
 .task-item {
   display: flex;
   align-items: center;
-  gap: 1rem;
+  gap: 0.75rem; 
   padding: 0.8rem;
-  border-radius: 4px;
-  transition: background-color 0.2s;
-  border-bottom: 1px solid #f0f0f0;
+  border-radius: var(--border-radius-sm);
+  border-bottom: 1px solid var(--color-borde-suave); 
+  transition: var(--transicion-rapida), opacity 0.2s ease;
+  
+  overflow: hidden; 
 }
 
 .task-item:last-child {
   border-bottom: none;
 }
 
-/* Hacemos que el item reaccione al hover,
-   pero no en el label o el input (que ya tienen cursor) */
 .task-item:hover {
-  background-color: #f8f9fa;
+  background-color: var(--color-fondo-gris-suave);
+}
+
+.task-item.completed {
+  opacity: 0.7; 
+}
+.task-item.completed:hover {
+  opacity: 1; 
 }
 
 .task-item input[type="checkbox"] {
   width: 1.15rem;
   height: 1.15rem;
-  margin: 0;
+  margin-top: 1px; 
   cursor: pointer;
+  flex-shrink: 0;
+  accent-color: var(--color-primario);
+  transition: var(--transicion-rapida);
 }
 
 .task-item label {
-  flex-grow: 1; /* ¡Esto empuja el botón de borrar a la derecha! */
-  color: #444;
+  flex-grow: 1;
+  color: var(--color-texto-principal);
   font-size: 1rem;
+  font-weight: 500; 
   cursor: pointer;
   margin: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  transition: color 0.2s ease; 
 }
 
 .task-item.completed label {
   text-decoration: line-through;
-  color: #999;
+  color: var(--color-texto-desactivado);
 }
 
-/* 6. (¡NUEVO!) Botón de BORRAR TAREA (la 'X') */
-.task-delete-btn {
-  background-color: #fce8e6; /* Fondo rojo muy pálido */
-  color: #c93434; /* Rojo oscuro */
+.priority-tag {
+  font-size: 0.75rem;
+  font-weight: 600; 
+  padding: 3px 10px; 
+  border-radius: 12px;
+  text-transform: capitalize; 
+  line-height: 1;
+  white-space: nowrap; 
+}
+
+.priority-tag.high {
+  background-color: var(--color-fondo-rojo-suave);
+  color: var(--color-texto-rojo-fuerte);
+}
+.priority-tag.medium {
+  background-color: var(--color-fondo-aviso-suave);
+  color: var(--color-texto-aviso-fuerte);
+}
+.priority-tag.low {
+  background-color: var(--color-fondo-info-suave);
+  color: var(--color-texto-info-fuerte);
+}
+
+/* ---------------------------------- */
+/* 5b. Controles de Filtro de Tareas  */
+/* ---------------------------------- */
+.task-filter-controls {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid var(--color-borde-suave);
+}
+
+.filter-btn {
+  padding: 0.4rem 0.8rem;
+  font-size: 0.9rem;
+  font-weight: 500; 
+  border: none; 
+  background-color: transparent; 
+  color: var(--color-texto-secundario);
+  border-radius: var(--border-radius-sm); 
+  cursor: pointer;
+  transition: var(--transicion-rapida);
+}
+
+.filter-btn:hover {
+  color: var(--color-texto-principal);
+  background-color: var(--color-fondo-gris-suave); 
+}
+
+.filter-btn.active {
+  background-color: var(--color-fondo-gris-suave); 
+  color: var(--color-texto-principal);
+  font-weight: 600; 
+}
+
+body.dark .filter-btn.active {
+   background-color: var(--color-borde-suave);
+}
+
+/* ---------------------------------- */
+/* 6. Botones de Acción de Tarea      */
+/* ---------------------------------- */
+
+.task-item-controls {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  margin-left: auto; 
+  flex-shrink: 0;
+  opacity: 0;
+  transition: var(--transicion-rapida);
+}
+
+.task-item:hover .task-item-controls {
+  opacity: 1;
+}
+
+.task-control-btn {
+  background-color: transparent;
+  color: var(--color-texto-secundario);
   border: none;
+  border-radius: var(--border-radius-sm);
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: var(--transicion-rapida);
   width: 28px;
   height: 28px;
-  border-radius: 50%; /* Circular */
-  font-weight: 700;
-  font-size: 0.9rem;
-  cursor: pointer;
-  transition: background-color 0.2s, color 0.2s;
-  /* Para centrar la 'X' */
   display: flex;
   align-items: center;
   justify-content: center;
-  line-height: 1;
 }
 
-.task-delete-btn:hover {
-  background-color: #dc3545; /* Rojo sólido */
-  color: white;
+.task-control-btn.edit-btn:hover {
+  background-color: var(--color-fondo-gris-suave);
+  color: var(--color-primario);
 }
 
-/* 7. (¡NUEVO!) Footer de la Tarjeta y Botón de BORRAR RUTA */
-.path-card-footer {
-  margin-top: 2rem; /* Espacio separador */
-  padding-top: 1rem;
-  border-top: 1px solid #f0f0f0;
-  display: flex;
-  justify-content: flex-end; /* Alinea el botón a la derecha */
+.task-control-btn.delete-btn:hover {
+  background-color: var(--color-fondo-rojo-suave);
+  color: var(--color-peligro);
 }
 
-.path-delete-btn {
-  background-color: transparent;
-  color: #dc3545; /* Rojo */
-  border: 1px solid #dc3545;
-  padding: 0.6rem 1rem;
-  border-radius: 4px;
-  font-size: 0.9rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: background-color 0.2s, color 0.2s;
-}
-
-.path-delete-btn:hover {
-  background-color: #dc3545;
-  color: white;
-}
-
-/* 8. Mensaje de Rutas Vacías */
+/* ---------------------------------- */
+/* 8. Mensaje de Rutas Vacías         */
+/* ---------------------------------- */
 .empty-paths {
   text-align: center;
-  color: #777;
+  color: var(--color-texto-secundario);
   font-size: 1.1rem;
-  padding: 2rem;
-  background-color: #fafafa;
-  border-radius: 8px;
+  padding: 3rem 2rem; 
+  background-color: var(--color-bg-tarjeta);
+  border-radius: var(--border-radius-md);
+  border: 1px dashed var(--color-borde-fuerte);
+}
+body.dark .empty-paths {
+  border-color: var(--color-borde-suave);
+}
+
+/* ---------------------------------- */
+/* 9. Formulario de Edición (Tarea)   */
+/* ---------------------------------- */
+.edit-task-form {
+  display: flex;
+  flex-grow: 1;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.edit-task-form input {
+  flex-grow: 1;
+  padding: 0.5rem;
+  border: 1px solid var(--color-primario);
+  background-color: var(--color-bg-input);
+  color: var(--color-texto-principal);
+  border-radius: var(--border-radius-sm);
+  font-size: 1rem;
+  font-family: var(--font-principal);
+}
+
+.task-priority-select-edit {
+  padding: 0.5rem;
+  border: 1px solid var(--color-borde-fuerte);
+  background-color: var(--color-bg-input);
+  color: var(--color-texto-principal);
+  border-radius: var(--border-radius-sm);
+  font-size: 0.9rem;
+  flex-shrink: 0;
+  font-family: var(--font-principal);
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3E%3Cpath stroke='%23a1a1aa' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='m6 8 4 4 4-4'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 0.75rem center;
+  background-size: 1.25em;
+  padding-right: 2.5rem; 
+}
+
+body.dark .task-priority-select-edit {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3E%3Cpath stroke='%2371717a' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='m6 8 4 4 4-4'/%3E%3C/svg%3E");
+}
+
+.task-edit-save-btn,
+.task-edit-cancel-btn {
+  padding: 0.5rem 0.75rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  border: none;
+  border-radius: var(--border-radius-sm);
+  cursor: pointer;
+  transition: var(--transicion-rapida);
+  flex-shrink: 0;
+}
+
+.task-edit-save-btn {
+  background-color: var(--color-secundario);
+  color: var(--color-texto-blanco);
+}
+.task-edit-save-btn:hover {
+  background-color: var(--color-secundario-hover);
+}
+
+.task-edit-cancel-btn {
+  background-color: var(--color-fondo-gris-suave);
+  color: var(--color-texto-principal);
+  border: 1px solid var(--color-borde-fuerte);
+}
+.task-edit-cancel-btn:hover {
+  background-color: var(--color-borde-fuerte);
 }

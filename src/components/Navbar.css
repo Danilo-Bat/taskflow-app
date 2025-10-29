@@ -1,9 +1,17 @@
 /* Estilos para mi Navbar */
 .navbar {
-  background-color: white;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  background-color: var(--color-bg-tarjeta);
+  /* Sombra eliminada para un look más limpio */
   padding: 0 2rem;
-  border-bottom: 1px solid #eee;
+  border-bottom: 1px solid var(--color-borde-suave);
+  transition: var(--transicion-rapida);
+  /* Garantiza que esté sobre el contenido */
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+body.dark .navbar {
+  box-shadow: none;
 }
 
 .navbar-container {
@@ -12,51 +20,70 @@
   justify-content: space-between;
   max-width: 900px;
   margin: 0 auto;
-  height: 60px; /* Altura fija para la navbar */
+  height: 64px; /* Un estándar más común */
 }
 
 .navbar-brand {
   font-size: 1.5rem;
   font-weight: 700;
-  color: #007bff; /* Azul corporativo */
+  color: var(--color-primario); /* Usamos el nuevo Índigo */
 }
 
 .navbar-links {
   display: flex;
-  gap: 1rem;
+  gap: 1.5rem; 
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
 }
 
 .nav-link {
   text-decoration: none;
-  color: #555;
+  color: var(--color-texto-secundario);
   font-weight: 600;
   padding: 0.5rem 0;
-  border-bottom: 2px solid transparent; /* Borde sutil para el 'active' */
-  transition: color 0.2s, border-bottom 0.2s;
+  border-bottom: 2px solid transparent; 
+  transition: var(--transicion-rapida);
 }
 
 .nav-link:hover {
-  color: #000;
+  color: var(--color-texto-principal);
 }
 
 /* Así resalto la página activa */
 .nav-link.active {
-  color: #007bff;
-  border-bottom: 2px solid #007bff;
+  color: var(--color-primario);
+  border-bottom: 2px solid var(--color-primario);
 }
 
+/* Contenedor de controles de la derecha */
+.navbar-controls {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.navbar-user-email {
+  font-size: 0.9rem;
+  color: var(--color-texto-secundario);
+  font-weight: 500;
+}
+
+/* --- Botón de Logout ahora es SECUNDARIO --- */
 .logout-button-nav {
-  background-color: #dc3545;
-  color: white;
+  background-color: var(--color-fondo-gris-suave);
+  color: var(--color-texto-secundario);
   padding: 0.6rem 1rem;
-  border: none;
-  border-radius: 4px;
+  border: 1px solid var(--color-borde-fuerte);
+  border-radius: var(--border-radius-sm);
   font-size: 0.9rem;
   font-weight: 600;
   cursor: pointer;
-  transition: background-color 0.2s;
+  transition: var(--transicion-rapida);
 }
 
 .logout-button-nav:hover {
-  background-color: #c82333;
+  background-color: var(--color-fondo-rojo-suave);
+  color: var(--color-peligro);
+  border-color: var(--color-peligro);
 }

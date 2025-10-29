@@ -6,7 +6,7 @@ import React, { useContext, useState } from 'react';
 // 2. Importo mi contexto de autenticación
 import { AuthContext } from '../context/AuthContext';
 
-// 3. ¡Importo mis nuevos estilos!
+// 3. Importo mis nuevos estilos
 import './Login.css';
 
 export default function Login() {

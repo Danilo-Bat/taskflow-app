@@ -4,7 +4,7 @@ import React, { Suspense } from 'react';
 import { AppRouter } from './routes/AppRouter';
 // 3. Importo mi AuthProvider 
 import { AuthProvider } from './context/AuthContext';
-// 4. ¡NUEVA IMPORTACIÓN! Importo mi PathsProvider
+// 4. Importo mi PathsProvider
 import { PathsProvider } from './context/PathsContext';
 
 function App() {

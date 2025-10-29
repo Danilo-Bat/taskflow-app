@@ -1,10 +1,15 @@
-/* Estilos para mi página de Dashboard */
+/* Registro de Propiedad CSS para Animación de Números */
+@property --num {
+  syntax: '<integer>';
+  initial-value: 0;
+  inherits: false;
+}
 
 /* 1. Contenedor principal de la página */
 .dashboard-container {
   width: 100%;
-  max-width: 900px; /* Mismo ancho que el manager */
-  margin: 0 auto; /* Centrado */
+  max-width: 900px;
+  margin: 0 auto;
   padding: 2rem;
   display: flex;
   flex-direction: column;
@@ -12,68 +17,104 @@
 }
 
 .dashboard-container h1 {
-  color: #222;
-  border-bottom: 2px solid #eee;
+  color: var(--color-texto-principal);
+  border-bottom: 2px solid var(--color-borde-suave);
   padding-bottom: 1rem;
+  font-weight: 700;
 }
 
 /* 2. Contenedor de Tarjetas de Estadísticas */
 .stats-grid {
   display: grid;
-  /* Creo un grid responsivo */
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
   gap: 1.5rem;
 }
 
 .stat-card {
-  background-color: white;
+  background-color: var(--color-bg-tarjeta);
   padding: 1.5rem;
-  border-radius: 8px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-  border-left: 5px solid #007bff; /* Un detalle de color */
+  border-radius: var(--border-radius-md); 
+  box-shadow: var(--shadow-md); 
+  transition: var(--transicion-rapida);
 }
 
+.stat-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
+}
+
+body.dark .stat-card {
+  border: 1px solid var(--color-borde-suave);
+  box-shadow: 0 0 0 1px var(--color-borde-suave);
+}
+body.dark .stat-card:hover {
+  border-color: var(--color-borde-fuerte);
+  box-shadow: 0 0 0 1px var(--color-borde-fuerte);
+}
+
+
 .stat-card h3 {
-  font-size: 1.1rem;
-  color: #555;
+  font-size: 0.9rem; 
+  color: var(--color-texto-secundario);
   margin-bottom: 0.5rem;
   text-transform: uppercase;
+  font-weight: 600; 
 }
 
 .stat-card .stat-number {
   font-size: 2.5rem;
   font-weight: 700;
-  color: #007bff;
+  color: var(--color-primario); 
+  line-height: 1;
+
+  /* --- Animación de Contador --- */
+  transition: --num 0.5s ease-out; /* Animamos el cambio del número */
+  counter-reset: num var(--num);   /* Seteamos el contador al valor de --num */
 }
 
-/* Diferentes colores para cada tarjeta */
-.stat-card.tasks {
-  border-left-color: #28a745; /* Verde */
+/* Mostramos el número usando el contador */
+.stat-card .stat-number::after {
+  content: counter(num);
 }
+
+/* Añadimos el sufijo '%' solo a la tarjeta 'completed' */
+.stat-card.completed .stat-number::after {
+  content: counter(num) '%';
+}
+
+
 .stat-card.tasks .stat-number {
-  color: #28a745;
+  color: var(--color-secundario);
 }
 
-.stat-card.completed {
-  border-left-color: #ffc107; /* Amarillo */
-}
 .stat-card.completed .stat-number {
-  color: #ffc107;
+  color: var(--color-aviso);
 }
 
 /* 3. Lista de Tareas Pendientes */
 .pending-tasks-container {
-  background-color: white;
+  background-color: var(--color-bg-tarjeta);
   padding: 1.5rem;
-  border-radius: 8px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  border-radius: var(--border-radius-md);
+  box-shadow: var(--shadow-md);
+  transition: var(--transicion-rapida);
+}
+body.dark .pending-tasks-container {
+  border: 1px solid var(--color-borde-fuerte);
+  box-shadow: 0 0 0 1px var(--color-borde-suave);
 }
 
 .pending-tasks-container h2 {
-  color: #333;
+  color: var(--color-texto-principal);
   margin-bottom: 1.5rem;
-  border-bottom: 1px solid #eee;
+  border-bottom: 1px solid var(--color-borde-suave);
   padding-bottom: 1rem;
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+.pending-tasks-container p {
+  color: var(--color-texto-secundario);
 }
 
 .pending-task-list {
@@ -87,7 +128,7 @@
   justify-content: space-between;
   align-items: center;
   padding: 0.75rem 0.5rem;
-  border-bottom: 1px solid #f4f4f4;
+  border-bottom: 1px solid var(--color-borde-suave);
 }
 
 .pending-task-item:last-child {
@@ -95,15 +136,73 @@
 }
 
 .pending-task-item .task-name {
-  font-weight: 600;
-  color: #444;
+  font-weight: 500;
+  color: var(--color-texto-principal);
 }
 
 .pending-task-item .path-name {
-  /* La ruta a la que pertenece */
-  font-size: 0.9rem;
-  color: #fff;
-  background-color: #6c757d; /* Gris */
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--color-texto-secundario);
+  background-color: var(--color-fondo-gris-suave);
   padding: 0.2rem 0.6rem;
-  border-radius: 12px;
+  border-radius: var(--border-radius-sm);
+}
+body.dark .pending-task-item .path-name {
+  background-color: var(--color-borde-fuerte);
+  color: var(--color-texto-secundario);
+}
+
+/* 4. Estilos para Tarjeta de Prioridad */
+.stat-card.priority-breakdown {
+  padding-top: 1.5rem;
+  padding-bottom: 1rem;
+}
+
+.stat-card.priority-breakdown .stat-number {
+  color: var(--color-peligro);
+}
+
+.stat-card.priority-breakdown h3 {
+  margin-top: 0;
+  margin-bottom: 0.5rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--color-borde-suave);
+}
+
+.priority-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.6rem 0;
+}
+
+.priority-item span {
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: var(--color-texto-principal);
+}
+
+.priority-item strong {
+  font-size: 1.1rem;
+
+  /* --- Animación de Contador --- */
+  transition: --num 0.5s ease-out;
+  counter-reset: num var(--num);
+}
+
+/* Mostramos el número usando el contador */
+.priority-item strong::after {
+  content: counter(num);
+}
+
+
+.priority-item.high strong {
+  color: var(--color-peligro);
+}
+.priority-item.medium strong {
+  color: var(--color-aviso);
+}
+.priority-item.low strong {
+  color: var(--color-info); 
 }

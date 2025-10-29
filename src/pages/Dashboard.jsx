@@ -1,6 +1,6 @@
 // 1. Importo las herramientas
-// Necesito useContext y useMemo
-import React, { useContext, useMemo } from 'react';
+// Importamos useState y useEffect
+import React, { useContext, useMemo, useState, useEffect } from 'react'; 
 
 // 2. Importo el contexto de datos
 import { PathsContext } from '../context/PathsContext';
@@ -8,54 +8,78 @@ import { PathsContext } from '../context/PathsContext';
 // 3. Importo los estilos
 import './Dashboard.css';
 
+// Estado inicial para la animación
+const initialStats = {
+  totalPaths: 0,
+  totalTasks: 0,
+  completedTasks: 0,
+  completionPercentage: 0,
+  highPriorityPending: 0,
+  mediumPriorityPending: 0,
+  lowPriorityPending: 0,
+};
+
 export default function Dashboard() {
   
-  // 4. Me conecto al contexto y saco la lista de 'paths'
   const { paths } = useContext(PathsContext);
-
-  // 5. ¡CÁLCULO OPTIMIZADO CON useMemo!
-  // 'useMemo' "memoriza" el resultado de esta función.
-  // Solo volverá a calcular las 'stats' si el array 'paths'
-  // (que está en las dependencias [paths]) cambia.
-  // ¡Esto evita cálculos innecesarios en cada re-render!
-  const stats = useMemo(() => {
+  const contextStats = useMemo(() => {
     const totalPaths = paths.length;
     let totalTasks = 0;
     let completedTasks = 0;
 
-    // Recorro las rutas para sumar las tareas
     for (const path of paths) {
       totalTasks += path.tasks.length;
       completedTasks += path.tasks.filter(task => task.completed).length;
     }
 
-    // Calculo el porcentaje (y evito dividir por cero)
     const completionPercentage = totalTasks === 0 
       ? 0 
       : Math.round((completedTasks / totalTasks) * 100);
+
+    const pendingTasks = paths.flatMap(path => 
+      path.tasks.filter(task => !task.completed)
+    );
+    
+    const highPriorityPending = pendingTasks.filter(t => t.priority === 'high').length;
+    const mediumPriorityPending = pendingTasks.filter(t => t.priority === 'medium').length;
+    const lowPriorityPending = pendingTasks.filter(t => t.priority === 'low' || !t.priority).length;
 
     return {
       totalPaths,
       totalTasks,
       completedTasks,
       completionPercentage,
+      highPriorityPending,
+      mediumPriorityPending,
+      lowPriorityPending,
     };
-  }, [paths]); // <- Array de dependencias
+  }, [paths]); 
+
+  // 5. Estado local para manejar la animación
+  const [animatedStats, setAnimatedStats] = useState(initialStats);
+  
+  useEffect(() => {
+    // Cuando el componente carga o los stats del contexto cambian,
+    // actualizamos el estado local. Esto dispara la transición CSS.
+    // Usamos un pequeño timeout para asegurar que el DOM se pinte con 0s primero.
+    const timer = setTimeout(() => {
+      setAnimatedStats(contextStats);
+    }, 50); // 50ms es suficiente
+    
+    return () => clearTimeout(timer); // Limpiamos el timer
+  }, [contextStats]); // Depende de los stats reales
 
   // 6. OBTENGO LA LISTA DE TAREAS PENDIENTES
-  // También con 'useMemo' para optimizar
   const pendingTasks = useMemo(() => {
     return paths.flatMap(path => 
       path.tasks
-        // 1. Filtro solo las NO completadas
         .filter(task => !task.completed)
-        // 2. Añado el nombre de la ruta a la tarea
         .map(task => ({ ...task, pathName: path.name }))
     );
   }, [paths]);
 
 
-  // 7. Devuelvo el JSX (la interfaz)
+  // 7. Devuelvo el JSX usando 'animatedStats'
   return (
     <div className="dashboard-container">
       <h1>Mi Dashboard (Centro de Progreso)</h1>
@@ -64,15 +88,41 @@ export default function Dashboard() {
       <section className="stats-grid">
         <div className="stat-card">
           <h3>Rutas Creadas</h3>
-          <p className="stat-number">{stats.totalPaths}</p>
+          <p 
+            className="stat-number" 
+            style={{ "--num": animatedStats.totalPaths }}
+          ></p>
         </div>
         <div className="stat-card tasks">
           <h3>Tareas Totales</h3>
-          <p className="stat-number">{stats.totalTasks}</p>
+          <p 
+            className="stat-number" 
+            style={{ "--num": animatedStats.totalTasks }}
+          ></p>
         </div>
         <div className="stat-card completed">
           <h3>Progreso General</h3>
-          <p className="stat-number">{stats.completionPercentage}%</p>
+          <p 
+            className="stat-number"
+            style={{ "--num": animatedStats.completionPercentage }}
+          ></p>
+        </div>
+        
+        {/* --- Desglose de Prioridad --- */}
+        <div className="stat-card priority-breakdown">
+          <h3>Pendientes por Prioridad</h3>
+          <div className="priority-item high">
+            <span>Alta</span>
+            <strong style={{ "--num": animatedStats.highPriorityPending }}></strong>
+          </div>
+          <div className="priority-item medium">
+            <span>Media</span>
+            <strong style={{ "--num": animatedStats.mediumPriorityPending }}></strong>
+          </div>
+          <div className="priority-item low">
+            <span>Baja</span>
+            <strong style={{ "--num": animatedStats.lowPriorityPending }}></strong>
+          </div>
         </div>
       </section>
 

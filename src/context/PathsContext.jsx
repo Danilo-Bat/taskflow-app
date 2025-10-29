@@ -44,9 +44,16 @@ export const PathsProvider = ({ children }) => {
   };
 
   // 8. Función para AÑADIR una Tarea a una Ruta Específica
-  const addTaskToPath = (pathId, taskName) => {
+  const addTaskToPath = (pathId, taskName, priority = 'low') => {
     if (!pathId || !taskName || taskName.trim() === '') return;
-    const newTask = { id: Date.now(), name: taskName.trim(), completed: false };
+    
+    const newTask = { 
+      id: Date.now(), 
+      name: taskName.trim(), 
+      completed: false,
+      priority: priority
+    };
+    
     setPaths(prevPaths => 
       prevPaths.map(path => 
         path.id === pathId ? { ...path, tasks: [...path.tasks, newTask] } : path
@@ -79,9 +86,28 @@ export const PathsProvider = ({ children }) => {
         path.id === pathId 
           ? { 
               ...path, 
-              // Usamos 'filter' para devolver un nuevo array
-              // solo con las tareas que NO coinciden con el taskId
               tasks: path.tasks.filter(task => task.id !== taskId) 
+            } 
+          : path
+      )
+    );
+  };
+
+  // 10b. Función para ACTUALIZAR CUALQUIER DATO de una Tarea
+  const updateTask = (pathId, taskId, updatedData) => {
+    if (!pathId || !taskId || !updatedData) return;
+    if (updatedData.name !== undefined && updatedData.name.trim() === '') return;
+
+    setPaths(prevPaths => 
+      prevPaths.map(path => 
+        path.id === pathId 
+          ? { 
+              ...path, 
+              tasks: path.tasks.map(task => 
+                task.id === taskId 
+                  ? { ...task, ...updatedData } 
+                  : task
+              ) 
             } 
           : path
       )
@@ -91,20 +117,48 @@ export const PathsProvider = ({ children }) => {
   // 11. Función para BORRAR una Hoja de Ruta COMPLETA
   const deletePath = (pathId) => {
     if (!pathId) return;
-    // Usamos 'filter' para devolver un nuevo array
-    // solo con las rutas que NO coinciden con el pathId
     setPaths(prevPaths => prevPaths.filter(path => path.id !== pathId));
+  };
+  
+  // 11b. Función para ACTUALIZAR el nombre de la RUTA
+  const updatePathName = (pathId, newName) => {
+    if (!pathId || !newName || newName.trim() === '') return;
+    
+    setPaths(prevPaths => 
+      prevPaths.map(path => 
+        path.id === pathId 
+          ? { ...path, name: newName.trim() } 
+          : path
+      )
+    );
+  };
+  
+  // 11c. Función para REORDENAR las Tareas
+  const reorderTasks = (pathId, reorderedTasks) => {
+    if (!pathId || !reorderedTasks) return;
+    
+    setPaths(prevPaths => 
+      prevPaths.map(path => 
+        path.id === pathId
+          // Reemplaza el array de tareas antiguo por el nuevo
+          ? { ...path, tasks: reorderedTasks }
+          : path
+      )
+    );
   };
 
 
-  // 12. ¡El ÚNICO OBJETO 'value' actualizado!
+  // 12. El OBJETO 'value'
   const value = {
     paths,
     addPath,
     addTaskToPath,
     toggleTaskStatus,
     deleteTask,     
-    deletePath,     
+    deletePath,
+    updateTask,
+    updatePathName,
+    reorderTasks, 
   };
 
   // 13. Retorno el proveedor
